@@ -53,7 +53,8 @@ export async function StatCards() {
   await connectDb()
   const stats  = await Stats.find()
 
-  // console.log("Fetched stats from DB:", stats)
+  console.log("Fetched stats from DB:", stats)
+  console.log("true or false check : ", stats[0].change>0)
 
 
 
@@ -71,15 +72,15 @@ export async function StatCards() {
               <div
                 className={cn(
                   "flex items-center gap-1 text-xs font-medium",
-                  stat.trend === "up" ? "text-success" : "text-destructive"
+                  stat.change > 0 ? "text-success" : "text-destructive"
                 )}
               >
-                {stat.trend === "up" ? (
+                {stat.change > 0 ? (
                   <TrendingUp className="h-3 w-3" />
                 ) : (
                   <TrendingDown className="h-3 w-3" />
                 )}
-                {stat.change}
+                {stat.change}%
               </div>
             </div>
             <div className="mt-4">
