@@ -53,8 +53,8 @@ export async function StatCards() {
   await connectDb()
   const stats  = await Stats.find()
 
-  console.log("Fetched stats from DB:", stats)
-  console.log("true or false check : ", stats[0].change>0)
+  // console.log("Fetched stats from DB:", stats)
+  // console.log("true or false check : ", stats[0].change>0)
 
 
 
