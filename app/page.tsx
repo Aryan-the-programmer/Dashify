@@ -8,6 +8,8 @@ import { CampaignsProgress } from "@/components/dashboard/campaigns-progress"
 import FocusedOverlay from "@/components/FocusedOverlay"
 import { Suspense } from "react"
 
+export const dynamic = "force-dynamic"
+
 export default function DashboardPage() {
 
 
