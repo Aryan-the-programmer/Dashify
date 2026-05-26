@@ -8,7 +8,7 @@ import { CampaignsProgress } from "@/components/dashboard/campaigns-progress"
 import FocusedOverlay from "@/components/FocusedOverlay"
 import { Suspense } from "react"
 
-export const dynamic = "force-dynamic"
+export const revalidate = 3600 // Revalidate this page every hour to update stats
 
 export default function DashboardPage() {
 
