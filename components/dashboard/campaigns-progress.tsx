@@ -33,12 +33,12 @@ import { Campaign } from "@/models/Campaign"
 export async function CampaignsProgress() {
 
   let campaigns = []
-  try{
+  try {
     await connectDb()
     campaigns = await Campaign.find()
     // console.log("Fetched campaigns from DB:", campaigns)
 
-  }catch(err){
+  } catch (err) {
     console.error("Error fetching campaign data:")
   }
 
@@ -48,23 +48,39 @@ export async function CampaignsProgress() {
         <CardTitle className="text-foreground">Campaign Progress</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        {campaigns.map((campaign) => (
-          <div key={campaign.name} className="space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-foreground">
-                {campaign.name}
-              </span>
-              <span className="text-sm text-muted-foreground">
-                {campaign.progress}%
-              </span>
+        {campaigns.map((campaign) => {
+          campaign.progress = ((Number(campaign.spent) / Number(campaign.budget)) * 100).toFixed(2)
+          campaign.spent = Number(campaign.spent).toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+            maximumFractionDigits: 0,
+          })
+          campaign.budget = Number(campaign.budget).toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+            maximumFractionDigits: 0,
+          })
+          // console.log(`Calculated progress for ${campaign.name}: ${campaign.progress}%`)
+
+          return (
+            <div key={campaign.name} className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-foreground">
+                  {campaign.name}
+                </span>
+                <span className="text-sm text-muted-foreground">
+                  {campaign.progress}%
+                </span>
+              </div>
+              <Progress value={campaign.progress} className="h-2" />
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <span>Spent: {campaign.spent}</span>
+                <span>Budget: {campaign.budget}</span>
+              </div>
             </div>
-            <Progress value={campaign.progress} className="h-2" />
-            <div className="flex items-center justify-between text-xs text-muted-foreground">
-              <span>Spent: {campaign.spent}</span>
-              <span>Budget: {campaign.budget}</span>
-            </div>
-          </div>
-        ))}
+          )
+        }
+        )}
       </CardContent>
     </Card>
   )

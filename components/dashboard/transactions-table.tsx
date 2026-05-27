@@ -84,7 +84,7 @@ export async function TransactionsTable() {
                 <TableCell className="font-medium text-foreground">
                   {transaction.client}
                 </TableCell>
-                <TableCell className="text-foreground">{transaction.amount}</TableCell>
+                <TableCell className="text-foreground">{(transaction.amount).toLocaleString("en-US", { style: "currency", currency: "USD",maximumFractionDigits: 0, })}</TableCell>
                 <TableCell>
                   <Badge
                     variant="secondary"
